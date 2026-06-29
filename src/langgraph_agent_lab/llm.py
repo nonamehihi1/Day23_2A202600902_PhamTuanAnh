@@ -12,6 +12,9 @@ Usage in nodes:
 from __future__ import annotations
 
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def get_llm(model: str | None = None, temperature: float = 0.0):
@@ -43,6 +46,8 @@ def get_llm(model: str | None = None, temperature: float = 0.0):
         return ChatOpenAI(
             model=model or os.getenv("LLM_MODEL", "gpt-4o-mini"),
             temperature=temperature,
+            api_key=os.getenv("OPENAI_API_KEY"),
+            base_url=os.getenv("OPENAI_API_BASE"),
         )
 
     if os.getenv("ANTHROPIC_API_KEY"):
